@@ -93,15 +93,22 @@ namespace Mediapipe.Unity.Sample.PoseTracking
       yield return new WaitUntil(() => task.IsCompleted);
 
       var result = task.Result;
+      Model3DMap(result);
+      // Debug.Log(landmark13.X + " " + landmark13.Y);
       // _poseDetectionAnnotationController.DrawNow(result.poseDetection);
       // _poseLandmarksAnnotationController.DrawNow(result.poseLandmarks);
       // _poseWorldLandmarksAnnotationController.DrawNow(result.poseWorldLandmarks);
       // _segmentationMaskAnnotationController.DrawNow(result.segmentationMask);
       // _roiFromLandmarksAnnotationController.DrawNow(result.roiFromLandmarks);
 
-      if (result.poseWorldLandmarks != null)
+      result.segmentationMask?.Dispose();
+    }
+
+    private void Model3DMap(PoseTrackingResult worldLandmark)
+    {
+      if (worldLandmark.poseWorldLandmarks != null)
       {
-        IReadOnlyList<Landmark> pac = result.poseWorldLandmarks.Landmark;
+        IReadOnlyList<Landmark> pac = worldLandmark.poseWorldLandmarks.Landmark;
 
         if (pac != null && pac.Count > 0)
         {
@@ -112,6 +119,7 @@ namespace Mediapipe.Unity.Sample.PoseTracking
           var landmark12 = pac[12];
           var landmark14 = pac[14];
           var landmark16 = pac[16];
+          // Debug.Log(worldLandmark.poseLandmarks.Landmark[24]);
 
           var vec11 = new Vector3(-landmark11.X, -landmark11.Y, landmark11.Z);
           var vec13 = new Vector3(-landmark13.X, -landmark13.Y, landmark13.Z);
@@ -123,9 +131,11 @@ namespace Mediapipe.Unity.Sample.PoseTracking
 
           var q1113 = Quaternion.LookRotation(vec11 - vec13);
           var q1315 = Quaternion.LookRotation(vec13 - vec15);
+
           var q1214 = Quaternion.LookRotation(vec12 - vec14);
           var q1416 = Quaternion.LookRotation(vec14 - vec16);
-          _rigging.MapModel(q1113, q1315, q1214, q1416);
+
+          _rigging.MapModel(q1113, q1315, q1214, q1416, worldLandmark.poseLandmarks.Landmark[24].Y);
         }
         else
         {
@@ -136,8 +146,6 @@ namespace Mediapipe.Unity.Sample.PoseTracking
       {
         Debug.LogError("result.poseWorldLandmarks is null.");
       }
-
-      result.segmentationMask?.Dispose();
     }
 
     private void OnPoseDetectionOutput(object stream, OutputStream<Detection>.OutputEventArgs eventArgs)

@@ -5,8 +5,10 @@
 // https://opensource.org/licenses/MIT.
 
 using UnityEngine;
+using UnityEngine.UIElements;
 public class ModelRigging : MonoBehaviour
 {
+  [SerializeField] private Transform _hip;
   [SerializeField] private Transform _leftHip;
   [SerializeField] private Transform _rightHip;
   [SerializeField] private Transform _leftArm;
@@ -20,8 +22,15 @@ public class ModelRigging : MonoBehaviour
   [SerializeField] private Transform _leftFoot;
   [SerializeField] private Transform _rightFoot;
 
-  public void MapModel(Quaternion q1113, Quaternion q1315, Quaternion q1214, Quaternion q1416)
+  private Vector3 _hipOriginalPosition;
+  public float _jumpScale = 3f;
+
+  public void Start() => _hipOriginalPosition = _hip.position;
+  public void MapModel(Quaternion q1113, Quaternion q1315, Quaternion q1214, Quaternion q1416, float yHip)
   {
+    var hipPosition = yHip > 1 ? 1 : yHip;
+    _hip.position = new Vector3(_hip.position.x, _hipOriginalPosition.y + ((1 - hipPosition) * _jumpScale), _hip.position.z);
+
     // transform.LookAt(new Vector3(0, 0, 0));  
     _leftArm.rotation = q1113;
     _leftArm.transform.Rotate(90, 0, 0);
