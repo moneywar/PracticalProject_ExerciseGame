@@ -135,7 +135,9 @@ namespace Mediapipe.Unity.Sample.PoseTracking
           var q1214 = Quaternion.LookRotation(vec12 - vec14);
           var q1416 = Quaternion.LookRotation(vec14 - vec16);
 
-          _rigging.MapModel(q1113, q1315, q1214, q1416, worldLandmark.poseLandmarks.Landmark[24].Y);
+          var hipPosition = worldLandmark.poseLandmarks.Landmark[24];
+
+          _rigging.MapModel(q1113, q1315, q1214, q1416, worldLandmark.poseLandmarks.Landmark[24]);
         }
         else
         {
