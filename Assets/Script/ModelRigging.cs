@@ -24,29 +24,30 @@ public class ModelRigging : MonoBehaviour
   [SerializeField] private Transform _rightFoot;
 
   private Vector3 _hipOriginalPosition;
-  public float _jumpScale = 3f;
-  public float _moveSpeed = 100f;
+  public float jumpScale = 3f;
+  public float moveDelay = 100f;
+  public float moveScale = 2f;
 
   public void Start() => _hipOriginalPosition = _hip.position;
   public void MapModel(Quaternion q1113, Quaternion q1315, Quaternion q1214, Quaternion q1416, NormalizedLandmark Hip)
   {
     var hipPositionY = Hip.Y > 1 ? 1 : Hip.Y;
-    var targetPositionBody = new Vector3(Hip.X - 0.5f, transform.position.y, transform.position.z);
-    var targetPositionHip = new Vector3(transform.position.x, _hipOriginalPosition.y + ((1 - hipPositionY) * _jumpScale), transform.position.z);
+    var targetPositionBody = new Vector3((Hip.X - 0.5f) * moveScale, transform.position.y, transform.position.z);
+    var targetPositionHip = new Vector3(transform.position.x, _hipOriginalPosition.y + ((1 - hipPositionY) * jumpScale), transform.position.z);
 
     // Smoothly interpolate the position over time
-    transform.position = Vector3.Lerp(transform.position, targetPositionBody, Time.deltaTime * _moveSpeed); // Adjust speed factor as needed
-    _hip.position = Vector3.Lerp(_hip.position, targetPositionHip, Time.deltaTime * _moveSpeed);
+    transform.position = Vector3.Lerp(transform.position, targetPositionBody, Time.deltaTime * moveDelay); // Adjust speed factor as needed
+    _hip.position = Vector3.Lerp(_hip.position, targetPositionHip, Time.deltaTime * moveDelay);
     // Update rotations as before
-    _leftArm.rotation = q1113;
-    _leftArm.transform.Rotate(90, 0, 0);
-    _leftFore.rotation = q1315;
-    _leftFore.transform.Rotate(90, 0, 0);
+    _rightArm.rotation = q1113;
+    _rightArm.transform.Rotate(90, 0, 0);
+    _rightFore.rotation = q1315;
+    _rightFore.transform.Rotate(90, 0, 0);
 
-    _rightArm.rotation = q1214;
-    _rightArm.Rotate(90, 0, 0);
-    _rightFore.rotation = q1416;
-    _rightFore.Rotate(90, 0, 0);
+    _leftArm.rotation = q1214;
+    _leftArm.Rotate(90, 0, 0);
+    _leftFore.rotation = q1416;
+    _leftFore.Rotate(90, 0, 0);
   }
 
 }

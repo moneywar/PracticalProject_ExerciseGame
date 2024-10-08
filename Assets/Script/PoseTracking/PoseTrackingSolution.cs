@@ -95,11 +95,11 @@ namespace Mediapipe.Unity.Sample.PoseTracking
       var result = task.Result;
       Model3DMap(result);
       // Debug.Log(landmark13.X + " " + landmark13.Y);
-      // _poseDetectionAnnotationController.DrawNow(result.poseDetection);
-      // _poseLandmarksAnnotationController.DrawNow(result.poseLandmarks);
-      // _poseWorldLandmarksAnnotationController.DrawNow(result.poseWorldLandmarks);
-      // _segmentationMaskAnnotationController.DrawNow(result.segmentationMask);
-      // _roiFromLandmarksAnnotationController.DrawNow(result.roiFromLandmarks);
+      _poseDetectionAnnotationController.DrawNow(result.poseDetection);
+      _poseLandmarksAnnotationController.DrawNow(result.poseLandmarks);
+      _poseWorldLandmarksAnnotationController.DrawNow(result.poseWorldLandmarks);
+      _segmentationMaskAnnotationController.DrawNow(result.segmentationMask);
+      _roiFromLandmarksAnnotationController.DrawNow(result.roiFromLandmarks);
 
       result.segmentationMask?.Dispose();
     }
@@ -119,15 +119,16 @@ namespace Mediapipe.Unity.Sample.PoseTracking
           var landmark12 = pac[12];
           var landmark14 = pac[14];
           var landmark16 = pac[16];
-          // Debug.Log(worldLandmark.poseLandmarks.Landmark[24]);
+          // Debug.Log(pac[15]);
+          // Debug.Log($"X: {pac[15].X}, Y: {pac[15].Y}, Z: {pac[15].Z}");
 
-          var vec11 = new Vector3(-landmark11.X, -landmark11.Y, landmark11.Z);
-          var vec13 = new Vector3(-landmark13.X, -landmark13.Y, landmark13.Z);
-          var vec15 = new Vector3(-landmark15.X, -landmark15.Y, landmark15.Z);
+          var vec11 = new Vector3(landmark11.X, -landmark11.Y, landmark11.Z);
+          var vec13 = new Vector3(landmark13.X, -landmark13.Y, landmark13.Z);
+          var vec15 = new Vector3(landmark15.X, -landmark15.Y, landmark15.Z);
 
-          var vec12 = new Vector3(-landmark12.X, -landmark12.Y, landmark12.Z);
-          var vec14 = new Vector3(-landmark14.X, -landmark14.Y, landmark14.Z);
-          var vec16 = new Vector3(-landmark16.X, -landmark16.Y, landmark16.Z);
+          var vec12 = new Vector3(landmark12.X, -landmark12.Y, landmark12.Z);
+          var vec14 = new Vector3(landmark14.X, -landmark14.Y, landmark14.Z);
+          var vec16 = new Vector3(landmark16.X, -landmark16.Y, landmark16.Z);
 
           var q1113 = Quaternion.LookRotation(vec11 - vec13);
           var q1315 = Quaternion.LookRotation(vec13 - vec15);
