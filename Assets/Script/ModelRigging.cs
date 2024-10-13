@@ -37,7 +37,7 @@ public class ModelRigging : MonoBehaviour
 
     // Smoothly interpolate the position over time
     transform.position = Vector3.Lerp(transform.position, targetPositionBody, Time.deltaTime * moveDelay); // Adjust speed factor as needed
-    _hip.position = Vector3.Lerp(_hip.position, targetPositionHip, Time.deltaTime * moveDelay);
+    // _hip.position = Vector3.Lerp(_hip.position, targetPositionHip, Time.deltaTime * moveDelay);
     // Update rotations as before
     _rightArm.rotation = q1113;
     _rightArm.transform.Rotate(90, 0, 0);

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TargetGenerate : MonoBehaviour
 {
-  [SerializeField] private GameObject _target;
+  [SerializeField] private GameObject _targetLeft;
+  [SerializeField] private GameObject _targetRight;
   private float _spawnOffsetX;
   private float _spawnOffsetY;
 
@@ -20,11 +21,15 @@ public class TargetGenerate : MonoBehaviour
 
   public void StartGen()
   {
-    float randomX = Random.Range(transform.position.x - _spawnOffsetX, transform.position.x + _spawnOffsetX); // Random X position
-    float randomY = Random.Range(transform.position.y - _spawnOffsetY, transform.position.y + _spawnOffsetY); // Random Y position
+    var randomX = Random.Range(transform.position.x - _spawnOffsetX, transform.position.x + _spawnOffsetX); // Random X position
+    var randomY = Random.Range(transform.position.y - _spawnOffsetY, transform.position.y + _spawnOffsetY); // Random Y position
 
     var spawnPosition = new Vector3(randomX, randomY, transform.position.z); // Create the spawn position
     var spawnRotation = Quaternion.identity; // No rotation
-    _ = Instantiate(_target, spawnPosition, spawnRotation);
+
+    _ = randomX < transform.position.x
+      ? Instantiate(_targetRight, spawnPosition, spawnRotation)
+      : Instantiate(_targetLeft, spawnPosition, spawnRotation);
+
   }
 }

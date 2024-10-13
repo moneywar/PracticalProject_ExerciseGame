@@ -95,11 +95,11 @@ namespace Mediapipe.Unity.Sample.PoseTracking
       var result = task.Result;
       Model3DMap(result);
       // Debug.Log(landmark13.X + " " + landmark13.Y);
-      _poseDetectionAnnotationController.DrawNow(result.poseDetection);
-      _poseLandmarksAnnotationController.DrawNow(result.poseLandmarks);
-      _poseWorldLandmarksAnnotationController.DrawNow(result.poseWorldLandmarks);
-      _segmentationMaskAnnotationController.DrawNow(result.segmentationMask);
-      _roiFromLandmarksAnnotationController.DrawNow(result.roiFromLandmarks);
+      // _poseDetectionAnnotationController.DrawNow(result.poseDetection);
+      // _poseLandmarksAnnotationController.DrawNow(result.poseLandmarks);
+      // _poseWorldLandmarksAnnotationController.DrawNow(result.poseWorldLandmarks);
+      // _segmentationMaskAnnotationController.DrawNow(result.segmentationMask);
+      // _roiFromLandmarksAnnotationController.DrawNow(result.roiFromLandmarks);
 
       result.segmentationMask?.Dispose();
     }

@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Global Resource
+  - target
+  - hand
+  - RightTarget
+  - LeftTarget
+  - RightHand
+  - LeftHand
   layers:
   - Default
   - TransparentFX
