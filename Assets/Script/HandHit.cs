@@ -14,6 +14,7 @@ public class HandHit : MonoBehaviour
       if (_playerUI)
       {
         _playerUI.AddScore();
+        _playerUI.AddHealth(1);
       }
     }
     else if (gameObject.CompareTag("RightHand") && other.gameObject.CompareTag("RightTarget"))
@@ -22,6 +23,7 @@ public class HandHit : MonoBehaviour
       if (_playerUI)
       {
         _playerUI.AddScore();
+        _playerUI.AddHealth(1);
       }
     }
     else

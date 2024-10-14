@@ -32,4 +32,6 @@ public class TargetGenerate : MonoBehaviour
       : Instantiate(_targetLeft, spawnPosition, spawnRotation);
 
   }
+
+  public void StopGen() => CancelInvoke(nameof(StartGen));
 }

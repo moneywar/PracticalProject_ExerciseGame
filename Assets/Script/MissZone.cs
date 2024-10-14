@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class MissZone : MonoBehaviour
 {
+  [SerializeField] private UIPlayerManager _uiPlayerManager;
+  [SerializeField] private int _healthLossOnMiss = 0;
   private void OnCollisionEnter(Collision other)
   {
-    Debug.Log("a");
-    if (other.gameObject.CompareTag("target"))
+    if (other.gameObject.CompareTag("LeftTarget") || other.gameObject.CompareTag("RightTarget"))
     {
+      _uiPlayerManager.LoseHealth(_healthLossOnMiss);
       Destroy(other.gameObject);
     }
 
