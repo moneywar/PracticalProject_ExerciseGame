@@ -29,10 +29,10 @@ public class ModelRigging : MonoBehaviour
   public float moveScale = 2f;
 
   public void Start() => _hipOriginalPosition = _hip.position;
-  public void MapModel(Quaternion q1113, Quaternion q1315, Quaternion q1214, Quaternion q1416, NormalizedLandmark Hip)
+  public void MapModel(Quaternion q1113, Quaternion q1315, Quaternion q1214, Quaternion q1416, Vector3 hip)
   {
-    var hipPositionY = Hip.Y > 1 ? 1 : Hip.Y;
-    var targetPositionBody = new Vector3((Hip.X - 0.5f) * moveScale, transform.position.y, transform.position.z);
+    var hipPositionY = hip.y > 1 ? 1 : hip.y;
+    var targetPositionBody = new Vector3((hip.x - 0.5f) * moveScale, transform.position.y, transform.position.z);
     var targetPositionHip = new Vector3(transform.position.x, _hipOriginalPosition.y + ((1 - hipPositionY) * jumpScale), transform.position.z);
 
     // Smoothly interpolate the position over time
