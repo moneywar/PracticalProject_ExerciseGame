@@ -139,6 +139,7 @@ namespace Mediapipe.Unity.Sample.PoseTracking
           var hipLeftPosition = new Vector3(worldLandmark.poseLandmarks.Landmark[24].X, worldLandmark.poseLandmarks.Landmark[24].Y, worldLandmark.poseLandmarks.Landmark[24].Z);
           var hipRightPosition = new Vector3(worldLandmark.poseLandmarks.Landmark[23].X, worldLandmark.poseLandmarks.Landmark[23].Y, worldLandmark.poseLandmarks.Landmark[23].Z);
           var middlePosition = new Vector3((hipLeftPosition.x + hipRightPosition.x) / 2, (hipLeftPosition.y + hipRightPosition.y) / 2, (hipLeftPosition.y + hipRightPosition.y) / 2);
+          var test = new Vector3(hipLeftPosition.x, hipLeftPosition.y, hipLeftPosition.z);
           _rigging.MapModel(q1113, q1315, q1214, q1416, middlePosition);
         }
         else

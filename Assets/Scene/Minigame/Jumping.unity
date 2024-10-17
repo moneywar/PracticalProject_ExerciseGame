@@ -96,7 +96,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: ccb98868fc60adb4fa735fd6e11a2132,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -241,14 +242,14 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.5
@@ -300,13 +301,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61746945}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.17138305, y: -0.88222045, z: 0.21147431, w: 0.38417897}
-  m_LocalPosition: {x: 8.02, y: 10.24, z: -0.57}
+  m_LocalRotation: {x: -0.057482097, y: -0.92834634, z: 0.3199702, w: 0.18024431}
+  m_LocalPosition: {x: 12.82, y: 9.1, z: -2.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 13.972, y: -129.356, z: 28.624}
+  m_LocalEulerAnglesHint: {x: 34.985, y: -153.04, z: 15.727}
 --- !u!1 &68518247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3580,8 +3581,8 @@ MonoBehaviour:
   _leftFoot: {fileID: 1875614639}
   _rightFoot: {fileID: 1875614637}
   jumpScale: 3
-  moveDelay: 300
-  moveScale: 6
+  moveDelay: 250
+  moveScale: 4
 --- !u!1001 &1839183322
 PrefabInstance:
   m_ObjectHideFlags: 0
