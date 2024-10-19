@@ -20,14 +20,13 @@ public class MoveObject : MonoBehaviour
   // Direction to choose in the Inspector
   public Direction moveDirection;
 
-  void Update()
+  private void Update()
   {
     // Move the object in the selected direction
     transform.Translate(GetDirectionVector(moveDirection) * _moveSpeed * Time.deltaTime);
-    Invoke(nameof(DestroyGameobject), 5f);
   }
 
-  private void DestroyGameobject() => Destroy(gameObject);
+  public void SetSpeed(float speed) => _moveSpeed = speed;
 
   // Returns a Vector3 based on the chosen direction
   private Vector3 GetDirectionVector(Direction direction)

@@ -9,14 +9,15 @@ public class TargetGenerate : MonoBehaviour
   private float _spawnOffsetX;
   private float _spawnOffsetY;
 
-  private readonly float _noteSpawnSpeed = 1f;  // Time interval (1 second)
+  [SerializeField] private float _noteSpawnSpeed = 1.5f;
+  [SerializeField] private float _noteSpeed = 20f;
 
   public void Start()
   {
     _spawnOffsetX = transform.localScale.x / 2f;
     _spawnOffsetY = transform.localScale.y / 2f;
 
-    InvokeRepeating(nameof(StartGen), 1f, 3f); //!!Must Make this stop when game over!!
+    InvokeRepeating(nameof(StartGen), 1f, _noteSpawnSpeed);
   }
 
   public void StartGen()
@@ -27,10 +28,10 @@ public class TargetGenerate : MonoBehaviour
     var spawnPosition = new Vector3(randomX, randomY, transform.position.z); // Create the spawn position
     var spawnRotation = Quaternion.identity; // No rotation
 
-    _ = randomX < transform.position.x
+    var target = randomX < transform.position.x
       ? Instantiate(_targetRight, spawnPosition, spawnRotation)
       : Instantiate(_targetLeft, spawnPosition, spawnRotation);
-
+    target.GetComponent<MoveObject>().SetSpeed(_noteSpeed);
   }
 
   public void StopGen() => CancelInvoke(nameof(StartGen));

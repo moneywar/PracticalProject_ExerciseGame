@@ -36,9 +36,9 @@ EditorBuildSettings:
     path: Assets/MediaPipeUnity/Samples/Scenes/MediaPipe Video/MediaPipe Video.unity
     guid: 16062faf4cda54140b781b925351b119
   - enabled: 1
-    path: Assets/Scene/MainMenu.unity
+    path: Assets/Main/Scene/MainMenu.unity
     guid: aca4520c12209d44ab6627559da2196a
   - enabled: 1
-    path: Assets/Scene/Minigame/Jumping.unity
+    path: Assets/Main/Scene/Minigame/Jumping.unity
     guid: 89282247a252b77478cc38c97e4f8923
   m_configObjects: {}

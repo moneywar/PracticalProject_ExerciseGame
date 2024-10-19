@@ -3118,6 +3118,8 @@ MonoBehaviour:
     type: 3}
   _targetRight: {fileID: 3940952663285458714, guid: 617502978fb030e4db11b0f9efa5cc62,
     type: 3}
+  _noteSpawnSpeed: 1.5
+  _noteSpeed: 5
 --- !u!1 &1626200858
 GameObject:
   m_ObjectHideFlags: 3
@@ -4868,7 +4870,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5733f0448ef34d840bc074d605e2ab7e,
         type: 3}
       propertyPath: m_Name
-      value: FootballStadium (1)
+      value: FootballStadium
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
