@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1186323197649024266}
   - component: {fileID: 926751164093216067}
   - component: {fileID: 3454952880537194759}
-  - component: {fileID: 3781151316113697792}
-  - component: {fileID: 433776560426893645}
+  - component: {fileID: 5902618146297623306}
+  - component: {fileID: 1295683970793427996}
   m_Layer: 0
   m_Name: LeftTarget
   m_TagString: LeftTarget
@@ -107,7 +107,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3781151316113697792
+--- !u!114 &5902618146297623306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,12 +116,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3940952663285458714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6809a122c29891a4999bbf5668d4fc01, type: 3}
+  m_Script: {fileID: 11500000, guid: 20423b71d94e30b4299b1de1df147944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 20
-  moveDirection: 4
---- !u!54 &433776560426893645
+  heightOffset: 5
+--- !u!54 &1295683970793427996
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,5 +145,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0

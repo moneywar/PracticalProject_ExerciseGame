@@ -20,7 +20,7 @@ public class MoveObject : MonoBehaviour
   // Direction to choose in the Inspector
   public Direction moveDirection;
 
-  private void Update()
+  void Update()
   {
     // Move the object in the selected direction
     transform.Translate(GetDirectionVector(moveDirection) * _moveSpeed * Time.deltaTime);
