@@ -2510,6 +2510,7 @@ MonoBehaviour:
   _targetGenerate: {fileID: 1608278182}
   _scoreText: {fileID: 834621233}
   _hpText: {fileID: 845450142}
+  _poseTrackingSolution: {fileID: 68518248}
 --- !u!1001 &1427113657
 PrefabInstance:
   m_ObjectHideFlags: 0

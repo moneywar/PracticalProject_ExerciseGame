@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mediapipe.Unity.Sample.PoseTracking;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,7 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private TargetGenerate _targetGenerate;
   [SerializeField] private TextMeshProUGUI _scoreText;
   [SerializeField] private TextMeshProUGUI _hpText;
+  [SerializeField] private PoseTrackingSolution _poseTrackingSolution;
   private int _scorePoint = 0;
   private int _healthPoint = 10;
 
@@ -33,6 +35,7 @@ public class UIPlayerManager : MonoBehaviour
     {
       _targetGenerate.StopGen();
       SceneManager.LoadScene("MainMenu");
+      _poseTrackingSolution.Stop();
       Debug.Log("Game Over!!");
     }
   }
