@@ -16,7 +16,7 @@ public class UIPlayerManager : MonoBehaviour
 
   private void Update() {
     _scoreText.text = "Score : " + _scorePoint.ToString();
-    _hpText.text = "Health : " + _healthPoint.ToString();
+    _hpText.text = "Fame : " + _healthPoint.ToString();
     IsGameover();
   }
   public void AddScore() => _scorePoint++;
