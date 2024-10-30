@@ -12,7 +12,7 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private TextMeshProUGUI _hpText;
   [SerializeField] private PoseTrackingSolution _poseTrackingSolution;
   private int _scorePoint = 0;
-  private int _healthPoint = 100;
+  private int _healthPoint = 1000;
 
   private void Update() {
     _scoreText.text = "Score : " + _scorePoint.ToString();

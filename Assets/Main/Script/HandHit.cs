@@ -5,9 +5,10 @@ using UnityEngine;
 public class HandHit : MonoBehaviour
 {
   [SerializeField] private UIPlayerManager _playerUI;
+  [SerializeField] private GameObject _hitParticle;
   private void OnCollisionEnter(Collision other)
   {
-    Debug.Log("HIT!!!!");
+    TriggerParticle();
     if (gameObject.CompareTag("LeftHand") && other.gameObject.CompareTag("LeftTarget"))
     {
       Destroy(other.gameObject);
@@ -29,6 +30,15 @@ public class HandHit : MonoBehaviour
     else
     {
       Destroy(other.gameObject);
+    }
+  }
+
+  private void TriggerParticle()
+  {
+    var allParticles = _hitParticle.GetComponentsInChildren<ParticleSystem>();
+    foreach (var ps in allParticles)
+    {
+      ps.Play();
     }
   }
 }
