@@ -8,30 +8,40 @@ public class HandHit : MonoBehaviour
   [SerializeField] private GameObject _hitParticle;
   private void OnCollisionEnter(Collision other)
   {
-    TriggerParticle();
-    if (gameObject.CompareTag("LeftHand") && other.gameObject.CompareTag("LeftTarget"))
+    if (other.gameObject.CompareTag("LeftTarget") || other.gameObject.CompareTag("RightTarget"))
     {
-      Destroy(other.gameObject);
-      if (_playerUI)
+      TriggerParticle();
+
+      // Check if the collision is with a matching target
+      var isLeftMatch = gameObject.CompareTag("LeftHand") && other.gameObject.CompareTag("LeftTarget");
+      var isRightMatch = gameObject.CompareTag("RightHand") && other.gameObject.CompareTag("RightTarget");
+
+      if (isLeftMatch || isRightMatch)
       {
-        _playerUI.AddScore();
-        _playerUI.AddHealth(1);
+        // Destroy the target using TargetMovementProjectile if available
+        if (other.gameObject.TryGetComponent<TargetMovementProjectile>(out var targetMovement))
+        {
+          targetMovement.DestroyObject();
+        }
+
+        // Update player UI
+        if (_playerUI)
+        {
+          _playerUI.AddScore();
+          _playerUI.AddHealth(1);
+        }
       }
-    }
-    else if (gameObject.CompareTag("RightHand") && other.gameObject.CompareTag("RightTarget"))
-    {
-      Destroy(other.gameObject);
-      if (_playerUI)
+      else
       {
-        _playerUI.AddScore();
-        _playerUI.AddHealth(1);
+        // Destroy any non-matching object
+        if (other.gameObject.TryGetComponent<TargetMovementProjectile>(out var targetMovement))
+        {
+          targetMovement.DestroyObject();
+        }
       }
-    }
-    else
-    {
-      Destroy(other.gameObject);
     }
   }
+
 
   private void TriggerParticle()
   {

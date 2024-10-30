@@ -3,6 +3,7 @@ using UnityEngine;
 public class TargetMovementProjectile : MonoBehaviour
 {
   public float heightOffset = 5f; // The height offset above the target
+  [SerializeField] private GameObject _cirlcleCanvasPrefab;
   private float speed = 10f; // Speed of the projectile
 
   private Vector3 _startPoint;
@@ -13,6 +14,7 @@ public class TargetMovementProjectile : MonoBehaviour
   private float _totalDistance;
   private float _traveledDistance = 0f;
   private Vector3 _targetPosition;
+  private CircleRhythm _circleRhythm;
 
   public void Init(float speed, Vector3 targetPosition)
   {
@@ -27,6 +29,8 @@ public class TargetMovementProjectile : MonoBehaviour
     _endPoint = _targetPosition;
     _controlPoint = ((_startPoint + _endPoint) / 2) + (Vector3.up * heightOffset);
     _totalDistance = ApproximateCurveLength(_startPoint, _controlPoint, _endPoint);
+    var _circleObject = Instantiate(_cirlcleCanvasPrefab, _endPoint, Quaternion.identity);
+    _circleRhythm = _circleObject.GetComponent<CircleRhythm>();
     _isSetup = true;
   }
 
@@ -47,9 +51,18 @@ public class TargetMovementProjectile : MonoBehaviour
         // Rotate to face the direction of movement along the curve
         var tangent = BezierQuadraticDerivative(_startPoint, _controlPoint, _endPoint, t);
         transform.rotation = Quaternion.LookRotation(tangent);
+        if (_circleRhythm != null)
+        {
+          _circleRhythm.UpdateSize(t);
+        }
       }
       else
       {
+        if (_circleRhythm != null)
+        {
+          Destroy(_circleRhythm.gameObject);
+          _circleRhythm = null;
+        }
         // After reaching the target, continue in the last direction of the curve
         var tangent = BezierQuadraticDerivative(_startPoint, _controlPoint, _endPoint, 1f).normalized;
         transform.position += speed * Time.deltaTime * tangent;
@@ -58,6 +71,16 @@ public class TargetMovementProjectile : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(tangent);
       }
     }
+  }
+
+  public void DestroyObject()
+  {
+    if (_circleRhythm != null)
+    {
+      Destroy(_circleRhythm.gameObject);
+      _circleRhythm = null;
+    }
+    Destroy(gameObject);
   }
 
   private Vector3 BezierQuadratic(Vector3 p0, Vector3 p1, Vector3 p2, float t)

@@ -11,7 +11,10 @@ public class MissZone : MonoBehaviour
     if (other.gameObject.CompareTag("LeftTarget") || other.gameObject.CompareTag("RightTarget"))
     {
       _uiPlayerManager.LoseHealth(_healthLossOnMiss);
-      Destroy(other.gameObject);
+      if (other.gameObject.TryGetComponent<TargetMovementProjectile>(out var targetMovement))
+      {
+        targetMovement.DestroyObject();
+      }
     }
 
   }

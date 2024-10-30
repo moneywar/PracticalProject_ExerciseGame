@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightOffset: 5
+  _cirlcleCanvasPrefab: {fileID: 5147018767740314841, guid: f32f492752b09ff48be3189a249b2654,
+    type: 3}
 --- !u!54 &1274454784869072122
 Rigidbody:
   m_ObjectHideFlags: 0
