@@ -24,16 +24,22 @@ public class ModelRigging : MonoBehaviour
   [SerializeField] private Transform _rightFoot;
 
   private Vector3 _hipOriginalPosition;
+  private Vector3 _bodyOriginalPosition;
   public float jumpScale = 3f;
   public float moveDelay = 100f;
   public float moveScale = 2f;
 
-  public void Start() => _hipOriginalPosition = _hip.position;
+  public void Start()
+  {
+    _hipOriginalPosition = _hip.position;
+    _bodyOriginalPosition = transform.position;
+  }
   public void MapModel(Quaternion q1113, Quaternion q1315, Quaternion q1214, Quaternion q1416, Vector3 hip)
   {
     var hipPositionY = hip.y > 1 ? 1 : hip.y;
-    var targetPositionBody = new Vector3((hip.x - 0.5f) * moveScale, transform.position.y, transform.position.z);
+    var targetPositionBody = new Vector3(((hip.x - 0.5f) * moveScale) + _bodyOriginalPosition.x, transform.position.y, transform.position.z);
     var targetPositionHip = new Vector3(transform.position.x, _hipOriginalPosition.y + ((1 - hipPositionY) * jumpScale), transform.position.z);
+    // Debug.Log(hip);
 
     // Smoothly interpolate the position over time
     transform.position = Vector3.Lerp(transform.position, targetPositionBody, Time.deltaTime * moveDelay); // Adjust speed factor as needed

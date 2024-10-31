@@ -1,52 +1,107 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetMovementProjectile : MonoBehaviour
 {
   public float heightOffset = 5f; // The height offset above the target
-  private float duration = 1.5f; // Duration of the projectile's flight
-  private Vector3 _targetPosition;
-  private Vector3 startPoint;
-  private Vector3 controlPoint;
-  private Vector3 endPoint;
-  private float elapsedTime = 0f;
+  [SerializeField] private GameObject _cirlcleCanvasPrefab;
+  private float speed = 10f; // Speed of the projectile
+
+  private Vector3 _startPoint;
+  private Vector3 _controlPoint;
   private bool _isSetup = false;
 
-  private void Update()
+  private Vector3 _endPoint;
+  private float _totalDistance;
+  private float _traveledDistance = 0f;
+  private Vector3 _targetPosition;
+  private CircleRhythm _circleRhythm;
+
+  public void Init(float speed, Vector3 targetPosition)
   {
-    if (elapsedTime < duration && _isSetup)
-    {
-      elapsedTime += Time.deltaTime;
-      var t = elapsedTime / duration;
-
-      // Get the position on the Bezier curve
-      var position = BezierQuadratic(startPoint, controlPoint, endPoint, t);
-      transform.position = position;
-
-      // Optionally rotate the projectile to face the target
-      transform.LookAt(_targetPosition);
-    }
+    this.speed = speed;
+    _targetPosition = targetPosition;
+    Setup();
   }
 
   private void Setup()
   {
-    startPoint = transform.position;
-    endPoint = _targetPosition; // Set end point higher than the target
-    controlPoint = ((startPoint + endPoint) / 2) + (Vector3.up * heightOffset); // Adjust control point to make it higher
+    _startPoint = transform.position;
+    _endPoint = _targetPosition;
+    _controlPoint = ((_startPoint + _endPoint) / 2) + (Vector3.up * heightOffset);
+    _totalDistance = ApproximateCurveLength(_startPoint, _controlPoint, _endPoint);
+    var _circleObject = Instantiate(_cirlcleCanvasPrefab, _endPoint, Quaternion.identity);
+    _circleRhythm = _circleObject.GetComponent<CircleRhythm>();
     _isSetup = true;
   }
 
-  public void Init(float speed, Vector3 targetPosition)
+  private void Update()
   {
-    duration = speed;
-    _targetPosition = targetPosition;
-    Setup();
+    if (_isSetup)
+    {
+      // Move the projectile along the curve at a constant speed
+      _traveledDistance += speed * Time.deltaTime;
+      var t = _traveledDistance / _totalDistance;
+
+      if (t <= 1f)
+      {
+        // Move along the Bezier curve
+        var position = BezierQuadratic(_startPoint, _controlPoint, _endPoint, t);
+        transform.position = position;
+
+        // Rotate to face the direction of movement along the curve
+        var tangent = BezierQuadraticDerivative(_startPoint, _controlPoint, _endPoint, t);
+        transform.rotation = Quaternion.LookRotation(tangent);
+        if (_circleRhythm != null)
+        {
+          _circleRhythm.UpdateSize(t);
+        }
+      }
+      else
+      {
+        if (_circleRhythm != null)
+        {
+          Destroy(_circleRhythm.gameObject);
+          _circleRhythm = null;
+        }
+        // After reaching the target, continue in the last direction of the curve
+        var tangent = BezierQuadraticDerivative(_startPoint, _controlPoint, _endPoint, 1f).normalized;
+        transform.position += speed * Time.deltaTime * tangent;
+
+        // Optional: Keep rotation to face direction of movement
+        transform.rotation = Quaternion.LookRotation(tangent);
+      }
+    }
+  }
+
+  public void DestroyObject()
+  {
+    if (_circleRhythm != null)
+    {
+      Destroy(_circleRhythm.gameObject);
+      _circleRhythm = null;
+    }
+    Destroy(gameObject);
   }
 
   private Vector3 BezierQuadratic(Vector3 p0, Vector3 p1, Vector3 p2, float t)
   {
     var u = 1 - t;
     return (u * u * p0) + (2 * u * t * p1) + (t * t * p2);
+  }
+
+  private Vector3 BezierQuadraticDerivative(Vector3 p0, Vector3 p1, Vector3 p2, float t) => (2 * (1 - t) * (p1 - p0)) + (2 * t * (p2 - p1));
+
+  private float ApproximateCurveLength(Vector3 p0, Vector3 p1, Vector3 p2, int segments = 20)
+  {
+    var length = 0f;
+    var previousPoint = p0;
+    for (var i = 1; i <= segments; i++)
+    {
+      var t = (float)i / segments;
+      var currentPoint = BezierQuadratic(p0, p1, p2, t);
+      length += Vector3.Distance(previousPoint, currentPoint);
+      previousPoint = currentPoint;
+    }
+    return length;
   }
 }
