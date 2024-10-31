@@ -10,6 +10,6 @@ public class CircleRhythm : MonoBehaviour
   {
     var scale = t * 100;
     _fullCircle.transform.localScale = new Vector3(scale, scale, scale);
-    Debug.Log(scale);
+    // Debug.Log(scale);
   }
 }

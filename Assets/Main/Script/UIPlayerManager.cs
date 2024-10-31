@@ -11,10 +11,13 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private TextMeshProUGUI _scoreText;
   [SerializeField] private TextMeshProUGUI _hpText;
   [SerializeField] private PoseTrackingSolution _poseTrackingSolution;
+  [SerializeField] private GameUIManager _gameUIManager;
   private int _scorePoint = 0;
-  private int _healthPoint = 1000;
+  private int _healthPoint = 10;
+  private bool _isGameOver = false;
 
-  private void Update() {
+  private void Update()
+  {
     _scoreText.text = "Score : " + _scorePoint.ToString();
     _hpText.text = "Fame : " + _healthPoint.ToString();
     IsGameover();
@@ -31,12 +34,14 @@ public class UIPlayerManager : MonoBehaviour
   public void AddHealth(int hp) => _healthPoint += hp;
   private void IsGameover()
   {
-    if (_healthPoint <= 0)
+    if (_healthPoint <= 0 && !_isGameOver)
     {
-      _targetGenerate.StopGen();
-      SceneManager.LoadScene("MainMenu");
-      _poseTrackingSolution.Stop();
-      Debug.Log("Game Over!!");
+      _isGameOver = true;
+      // _targetGenerate.StopGen();
+      // SceneManager.LoadScene("MainMenu");
+      // _poseTrackingSolution.Stop();
+      // Debug.Log("Game Over!!");
+      _gameUIManager.GameOver(_scorePoint);
     }
   }
 }
