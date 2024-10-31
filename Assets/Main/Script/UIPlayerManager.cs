@@ -13,7 +13,7 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private PoseTrackingSolution _poseTrackingSolution;
   [SerializeField] private GameUIManager _gameUIManager;
   private int _scorePoint = 0;
-  private int _healthPoint = 10;
+  private int _healthPoint = 100;
   private bool _isGameOver = false;
 
   private void Update()

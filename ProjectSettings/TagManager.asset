@@ -11,6 +11,7 @@ TagManager:
   - LeftTarget
   - RightHand
   - LeftHand
+  - Audio
   layers:
   - Default
   - TransparentFX

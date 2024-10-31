@@ -15,6 +15,8 @@ public class GameUIManager : MonoBehaviour
   [SerializeField] private TextMeshProUGUI _scoreText;
   private bool _isPause = false;
   private bool _isGameOver = false;
+  private SoundPlayer _soundPlayer;
+  private void Awake() => _soundPlayer = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundPlayer>();
   private void Update()
   {
     if (Input.GetKeyDown(KeyCode.Escape) && !_isGameOver)
@@ -52,12 +54,16 @@ public class GameUIManager : MonoBehaviour
     SceneManager.LoadScene("MainMenu");
   }
 
-  public void GameOver(int Score)
+  public void GameOver(int score)
   {
     Time.timeScale = 0f; // Stop the game time
-    _scoreText.text = "Score : " + Score.ToString();
+    _scoreText.text = "Score : " + score.ToString();
     _isGameOver = true;
     _gameOverScreen.SetActive(true);
+    if (_soundPlayer)
+    {
+      _soundPlayer.PlaySFX(_soundPlayer._gameoverSFX);
+    }
   }
 
   public void RestartGame()
