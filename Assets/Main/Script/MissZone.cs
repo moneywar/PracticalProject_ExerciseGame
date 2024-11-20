@@ -5,7 +5,6 @@ using UnityEngine;
 public class MissZone : MonoBehaviour
 {
   [SerializeField] private UIPlayerManager _uiPlayerManager;
-  [SerializeField] private int _healthLossOnMiss = 0;
   private SoundPlayer _soundPlayer;
   private void Awake() => _soundPlayer = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundPlayer>();
   private void OnCollisionEnter(Collision other)
@@ -16,7 +15,7 @@ public class MissZone : MonoBehaviour
       {
         _soundPlayer.PlaySFX(_soundPlayer._missSFX);
       }
-      _uiPlayerManager.LoseHealth(_healthLossOnMiss);
+      _uiPlayerManager.IsMiss();
       if (other.gameObject.TryGetComponent<TargetMovementProjectile>(out var targetMovement))
       {
         targetMovement.DestroyObject();

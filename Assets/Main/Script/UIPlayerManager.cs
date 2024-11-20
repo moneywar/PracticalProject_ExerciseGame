@@ -16,19 +16,30 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private GameObject _popupText;
   [SerializeField] private Transform _scoreSpawnPoint;
   [SerializeField] private Transform _fameSpawnPoint;
+  [SerializeField] private HealthBar _healthBar;
   private int _scorePoint = 0;
-  private int _healthPoint = 100;
+  [SerializeField] private int _maxHealthPoint = 5;
+  private int _healthPoint;
+  [SerializeField] private int _maxTmpHealthPoint = 10;
+  private int _curTmpHealthPoint = 0;
   private bool _isGameOver = false;
-
+  [SerializeField] private int _scoreAddPerHit = 1;
+  [SerializeField] private int _healthAddPerHit = 1;
+  [SerializeField] private int _healthLosePerHit = 1;
+  private void Start(){
+    _healthPoint = _maxHealthPoint;
+    _healthBar.SetMaxHealth(_maxHealthPoint);
+  }
   private void Update()
   {
     _scoreText.text = "Score : " + _scorePoint.ToString();
-    _hpText.text = "Fame : " + _healthPoint.ToString();
+    _healthBar.SetHealth(_healthPoint);
+    // _hpText.text = "Fame : " + _healthPoint.ToString();
     IsGameover();
   }
-  public void AddScore()
+  public void AddScore(int score)
   {
-    _scorePoint++;
+    _scorePoint += score;
     var scorePopUp = Instantiate(_popupText, _scoreSpawnPoint.position, Quaternion.identity, gameObject.transform);
     var textSpawn = scorePopUp.GetComponentInChildren<TextSpawn>();
 
@@ -49,7 +60,25 @@ public class UIPlayerManager : MonoBehaviour
       _healthPoint = 0;
     }
   }
-  public void AddHealth(int hp) => _healthPoint += hp;
+  public void AddHealth(int hp)
+  {
+    _curTmpHealthPoint += hp;
+    if (_curTmpHealthPoint >= _maxTmpHealthPoint && _healthPoint != _maxHealthPoint){
+      _healthPoint++;
+      _curTmpHealthPoint = 0;
+    }
+    else if (_healthPoint == _maxHealthPoint)
+    {
+      _curTmpHealthPoint = 0;
+    }
+  }
+  public void IsHandHit()
+  {
+    AddHealth(_healthAddPerHit);
+    AddScore(_scoreAddPerHit);
+  }
+
+  public void IsMiss() => LoseHealth(_healthLosePerHit);
   private void IsGameover()
   {
     if (_healthPoint <= 0 && !_isGameOver)

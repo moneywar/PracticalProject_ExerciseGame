@@ -33,8 +33,7 @@ public class HandHit : MonoBehaviour
         // Update player UI
         if (_playerUI)
         {
-          _playerUI.AddScore();
-          _playerUI.AddHealth(1);
+          _playerUI.IsHandHit();
         }
       }
       else
