@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class UIPlayerManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private Transform _scoreSpawnPoint;
   [SerializeField] private Transform _fameSpawnPoint;
   [SerializeField] private HealthBar _healthBar;
+  [SerializeField] private TextMeshProUGUI _healthText;
+  [SerializeField] private Slider _tmpHealthSlider;
   private int _scorePoint = 0;
   [SerializeField] private int _maxHealthPoint = 5;
   private int _healthPoint;
@@ -26,7 +29,8 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private int _scoreAddPerHit = 1;
   [SerializeField] private int _healthAddPerHit = 1;
   [SerializeField] private int _healthLosePerHit = 1;
-  private void Start(){
+  private void Start()
+  {
     _healthPoint = _maxHealthPoint;
     _healthBar.SetMaxHealth(_maxHealthPoint);
   }
@@ -34,9 +38,12 @@ public class UIPlayerManager : MonoBehaviour
   {
     _scoreText.text = "Score : " + _scorePoint.ToString();
     _healthBar.SetHealth(_healthPoint);
+    SetHelthText();
+    SetTmpHealthPoint();
     // _hpText.text = "Fame : " + _healthPoint.ToString();
     IsGameover();
   }
+
   public void AddScore(int score)
   {
     _scorePoint += score;
@@ -63,7 +70,9 @@ public class UIPlayerManager : MonoBehaviour
   public void AddHealth(int hp)
   {
     _curTmpHealthPoint += hp;
-    if (_curTmpHealthPoint >= _maxTmpHealthPoint && _healthPoint != _maxHealthPoint){
+    Debug.Log(_curTmpHealthPoint);
+    if (_curTmpHealthPoint >= _maxTmpHealthPoint && _healthPoint != _maxHealthPoint)
+    {
       _healthPoint++;
       _curTmpHealthPoint = 0;
     }
@@ -89,6 +98,24 @@ public class UIPlayerManager : MonoBehaviour
       // _poseTrackingSolution.Stop();
       // Debug.Log("Game Over!!");
       _gameUIManager.GameOver(_scorePoint);
+    }
+  }
+
+  private void SetHelthText()
+  {
+    if (_healthText)
+    {
+      _healthText.text = _healthPoint.ToString() + " / " + _maxHealthPoint.ToString();
+    }
+  }
+
+  private void SetTmpHealthPoint()
+  {
+    if (_tmpHealthSlider)
+    {
+      var scale = (float)_curTmpHealthPoint / _maxTmpHealthPoint;
+      Debug.Log(scale);
+      _tmpHealthSlider.value = scale;
     }
   }
 }
