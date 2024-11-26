@@ -12,6 +12,7 @@ public class TargetGenerate : MonoBehaviour
 
   [SerializeField] private float _noteSpawnSpeed = 1.5f;
   [SerializeField] private float _noteSpeed = 20f;
+  [SerializeField] private float _speedUpPerSet = 1.5f;
 
   public void Start()
   {
@@ -34,6 +35,8 @@ public class TargetGenerate : MonoBehaviour
       : Instantiate(_targetLeft, transform.position, spawnRotation);
     target.GetComponent<TargetMovementProjectile>().Init(_noteSpeed, targetPosition);
   }
+
+  public void SpeedUp() => _noteSpeed += _speedUpPerSet;
 
   public void StopGen() => CancelInvoke(nameof(StartGen));
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Mediapipe.Unity.Sample.PoseTracking;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class UIPlayerManager : MonoBehaviour
@@ -20,6 +18,10 @@ public class UIPlayerManager : MonoBehaviour
   [SerializeField] private TextMeshProUGUI _healthText;
   [SerializeField] private Slider _tmpHealthSlider;
   [SerializeField] private TextMeshProUGUI _comboText;
+  [SerializeField] private TargetGenerate _targetGenerate;
+  [SerializeField] private Animator _speedUpTextAnimator;
+  [SerializeField] private int _speedUpScore = 100;
+  private int _curScoreBeforeChangeSpeed = 0;
   private int _combo = 0;
   private int _scorePoint = 0;
 
@@ -46,6 +48,7 @@ public class UIPlayerManager : MonoBehaviour
     SetHelthText();
     SetTmpHealthPoint();
     SetCombo();
+    CheckScoreToChangeSpeed();
     // _hpText.text = "Fame : " + _healthPoint.ToString();
     IsGameover();
   }
@@ -53,6 +56,7 @@ public class UIPlayerManager : MonoBehaviour
   public void AddScore(int score)
   {
     var curScoreMaking = score * ((_combo / _minimumComboAddScore) + 1);
+    _curScoreBeforeChangeSpeed += curScoreMaking;
     _scorePoint += curScoreMaking;
     var scorePopUp = Instantiate(_popupText, _scoreSpawnPoint.position, Quaternion.identity, gameObject.transform);
     var textSpawn = scorePopUp.GetComponentInChildren<TextSpawn>();
@@ -114,6 +118,19 @@ public class UIPlayerManager : MonoBehaviour
     }
   }
 
+  private void CheckScoreToChangeSpeed()
+  {
+    if (_targetGenerate)
+    {
+      if (_curScoreBeforeChangeSpeed >= _speedUpScore)
+      {
+        _targetGenerate.SpeedUp();
+        _curScoreBeforeChangeSpeed -= _speedUpScore;
+        if (_speedUpTextAnimator) _speedUpTextAnimator.SetTrigger("MoveDown");
+      }
+    }
+  }
+
   private void SetHelthText()
   {
     if (_healthText)
@@ -127,7 +144,6 @@ public class UIPlayerManager : MonoBehaviour
     if (_tmpHealthSlider)
     {
       var scale = (float)_curTmpHealthPoint / _maxTmpHealthPoint;
-      Debug.Log(scale);
       _tmpHealthSlider.value = scale;
     }
   }
